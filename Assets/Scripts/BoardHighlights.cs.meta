@@ -1,0 +1,16 @@
+fileFormatVersion: 2
+guid: e7d461c5e88aedb4797f92fced116bed
+timeCreated: 1499663588
+licenseType: Free
+MonoImporter:
+  serializedVersion: 2
+  defaultReferences:
+  - highlightPrefab: {fileID: 1631729167390748, guid: 944f826109224984a98536c8ddad77ec,
+      type: 2}
+  - killHighlight: {fileID: 2100000, guid: 6dd32247606e5fb4d8e47792ee6f8f9a, type: 2}
+  - highlightMaterial: {fileID: 2100000, guid: 4b3aeee3e5c834749b34796097d75794, type: 2}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
