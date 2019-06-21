@@ -21,8 +21,15 @@ public class Buttons : MonoBehaviour
 
     //Main Menu Functions
 
-    public void NewGame(string sceneName)
+    public void NewStandardGame(string sceneName)
     {
+        GlobalVars.gameType = GlobalVars.GameType.Standard;
+        Application.LoadLevel("ChessBoard");
+    }
+
+    public void NewFourPlayerGame(string sceneName)
+    {
+        GlobalVars.gameType = GlobalVars.GameType.FourPlayer;
         Application.LoadLevel("ChessBoard");
     }
 

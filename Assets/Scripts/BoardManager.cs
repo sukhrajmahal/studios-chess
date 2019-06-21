@@ -36,7 +36,18 @@ public class BoardManager : MonoBehaviour
 
     private void Start()
     {
-        SpawnAllChessmans();
+        if (GlobalVars.gameType == GlobalVars.GameType.Standard)
+        {
+            SpawnNormalGame();
+        }
+        else if (GlobalVars.gameType == GlobalVars.GameType.FourPlayer)
+        {
+            SpawnFourPlayerGame();
+        }
+        else
+        {
+            SpawnNineSixtyGame();
+        }
         Instance = this;
         mainCamera = Camera.main;
     }
@@ -232,7 +243,12 @@ public class BoardManager : MonoBehaviour
         activeChessman.Add(go);
     }
 
-    private void SpawnAllChessmans()
+    private void SpawnNormalGame()
+    {
+
+    }
+
+    private void SpawnFourPlayerGame()
     {
         activeChessman = new List<GameObject>();
         Chessmans = new Chessman[8, 8];
@@ -279,6 +295,10 @@ public class BoardManager : MonoBehaviour
         {
             SpawnChessman(19, 6, i);
         }
+    }
+
+    private void SpawnNineSixtyGame()
+    {
 
     }
 
@@ -304,7 +324,7 @@ public class BoardManager : MonoBehaviour
         numTurn = 0;
         numKings = 4;
         BoardHighlights.Instance.HideHighlights();
-        SpawnAllChessmans();
+        Start();
     }
 
     private void EndTurn()
@@ -358,7 +378,6 @@ public class BoardManager : MonoBehaviour
         {
             childRenderer.material = selectedMat;
         }
-          
     }
 
     //Cleaner way of doing this?
