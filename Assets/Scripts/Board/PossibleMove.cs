@@ -5,13 +5,13 @@ namespace ChessEngine
 {
     public struct PossibleMove
     {
-        private Point position;
-        private bool killMove;
+        public Point position;
+        public bool isKillMove;
 
         public PossibleMove(Point position, bool killMove)
         {
             this.position = position;
-            this.killMove = killMove;
+            this.isKillMove = killMove;
         }
     }
 }

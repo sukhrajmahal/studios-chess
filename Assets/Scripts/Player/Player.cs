@@ -6,10 +6,10 @@ namespace ChessEngine
     public class Player
     {
         //Information About the player
-        private int playerId;
-        private readonly PieceColour colour;
-        private InternalBoard internalBoard;
-        private List<Piece> pieces;
+        protected int playerId;
+        protected readonly PieceColour colour;
+        protected InternalBoard internalBoard;
+        protected List<Piece> pieces;
 
         public Player(int playerId, PieceColour colour, InternalBoard internalBoard)
         {

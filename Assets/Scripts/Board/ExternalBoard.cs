@@ -59,7 +59,7 @@ namespace ChessEngine
 
             //Creating a new Game Object
             Point position = piece.Position;
-            GameObject go = Instantiate(typeDict[piece.Type], GetTileCentre(position.x, position.y), 
+            GameObject go = Instantiate(typeDict[piece.Type], GetTileCentre(position), 
                 Quaternion.Euler(-90f, 0f, 0f)) as GameObject;
             go.transform.SetParent(transform);
             //Setting the colour of the piece
@@ -68,9 +68,25 @@ namespace ChessEngine
             board[position.x, position.y] = go;
         }
 
-        public void MovePiece(Piece piece, Point pos)
+        public void MovePiece(Piece piece, Point newPos)
         {
-            throw new System.NotImplementedException();
+            Point oldPos = piece.Position;
+            //Checking there is game object here
+            GameObject selectedPiece = board[oldPos.x, oldPos.y];
+            if (selectedPiece != null)
+            {
+                //Checking if the move is a captures
+                if (board[newPos.x, newPos.y] != null)
+                {
+                    //Remove the captured piece
+                    Destroy(board[newPos.x, newPos.y]);
+                }
+                //Moving the 3d object
+                selectedPiece.transform.position = GetTileCentre(newPos);
+                //Moving the object in the array
+                board[newPos.x, newPos.y] = selectedPiece;
+                board[oldPos.x, oldPos.y] = null;  
+            }
         }
 
         public void Promote(Piece piece, PieceType type)
@@ -78,16 +94,16 @@ namespace ChessEngine
             throw new System.NotImplementedException();
         }
 
-        private Vector3 GetTileCentre(int x, int y)
+        private Vector3 GetTileCentre(Point pos)
         {
             //Creating a zero vector
             Vector3 origin = Vector3.zero;
             //The board in memory thinks top left is (0,0) while
             //unity thinks bottom left is (0,0). Therefore the unity 
             //way needs y to be inverted before we get the new position
-            var yPos = (GlobalVars.gridSize - 1) - y;
+            var yPos = (GlobalVars.gridSize - 1) - pos.y;
 
-            origin.x += (TILE_SIZE * x) + TITLE_OFFSET;
+            origin.x += (TILE_SIZE * pos.x) + TITLE_OFFSET;
             origin.z += (TILE_SIZE * yPos) + TITLE_OFFSET;
             return origin;
         }

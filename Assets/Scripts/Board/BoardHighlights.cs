@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using ChessEngine;
 
 public class BoardHighlights : MonoBehaviour
 {
@@ -28,33 +29,32 @@ public class BoardHighlights : MonoBehaviour
         return go;
     }
 
-    public void HighLightAllowedMoves(int[,] moves)
+    public void HighLightAllowedMoves(List<PossibleMove> moves)
     {
-        for(int i = 0; i < 8; i++)
+        foreach (var move in moves)
         {
-            for(int j = 0; j < 8; j++)
+            GameObject highlight = GetHighlightObject();
+            if (move.isKillMove)
             {
-                if (moves[i, j] == 1 || moves[i,j] == 2)
-                {
-                    GameObject go = GetHighlightObject();
-                    if(moves[i,j] == 2)
-                    {
-                        go.GetComponent<MeshRenderer>().material = killHighlight;
-                    }
-                    else
-                    {
-                        go.GetComponent<MeshRenderer>().material = highlightMaterial;
-                    }
-                    go.SetActive(true);
-                    go.transform.position = new Vector3(i + 0.5f, 0, j + 0.5f);
-                }
+                highlight.GetComponent<MeshRenderer>().material = killHighlight;
             }
+            else
+            {
+                highlight.GetComponent<MeshRenderer>().material = highlightMaterial;
+            }
+            highlight.SetActive(true);
+            //Again unity thinks 0,0 is at bottom left. So we inverse the y. (size of grid 
+            //-1 because we start at 0. Then subtract y pos to inverse
+            var yPos = (GlobalVars.gridSize - 1 - move.position.y);
+            highlight.transform.position = new Vector3(move.position.x + 0.5f, 0, yPos + 0.5f);
         }
     }
 
     public void HideHighlights()
     {
-        foreach (GameObject go in highlights)
-            go.SetActive(false);
+        foreach (var highlight in highlights)
+        {
+            highlight.SetActive(false);
+        }
     }
 }
