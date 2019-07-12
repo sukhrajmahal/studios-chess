@@ -4,6 +4,7 @@ using UnityEngine;
 using System.Runtime.InteropServices;
 using UnityEngine.UI;
 using System;
+using ChessEngine;
 
 public class Buttons : MonoBehaviour
 {
@@ -23,13 +24,13 @@ public class Buttons : MonoBehaviour
 
     public void NewStandardGame(string sceneName)
     {
-        GlobalVars.gameType = GlobalVars.GameType.Standard;
+        GlobalVars.gameType = GameType.Standard;
         Application.LoadLevel("ChessBoard");
     }
 
     public void NewFourPlayerGame(string sceneName)
     {
-        GlobalVars.gameType = GlobalVars.GameType.FourPlayer;
+        GlobalVars.gameType = GameType.FourPlayer;
         Application.LoadLevel("ChessBoard");
     }
 
