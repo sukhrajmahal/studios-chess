@@ -41,12 +41,10 @@ namespace ChessEngine
                     foreach (var possibleMove in possibleMoves)
                     {
                         Point movePos = possibleMove.position;
-                        Debug.Log("Searching Possible move: " + movePos.x + "," + movePos.y);
-                        Debug.Log("Mouse click at " + clickPos.x + "," + clickPos.y);
-                        if (clickPos.x == movePos.x && clickPos.y == movePos.y)
+                        if (clickPos.X == movePos.X && clickPos.Y == movePos.Y)
                         {
-                            Debug.Log("Entering If statement");
                             internalBoard.MovePiece(selectedPiece, clickPos);
+                            break;
                         }
                     }
                 }

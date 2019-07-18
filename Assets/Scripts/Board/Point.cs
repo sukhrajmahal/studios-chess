@@ -5,13 +5,22 @@ namespace ChessEngine
 {
     public class Point
     {
-        public int x { get; set; }
-        public int y { get; set; }
+        public int X { get; set; }
+        public int Y { get; set; }
 
         public Point(int p1, int p2)
         {
-            x = p1;
-            y = p2;
+            X = p1;
+            Y = p2;
+        }
+
+        public bool IsOnBoard()
+        {
+            if (X >= 0 && X < GlobalVars.gridSize && Y >= 0 && Y < GlobalVars.gridSize)
+            {
+                return true;
+            }
+            return false;
         }
     }
 }

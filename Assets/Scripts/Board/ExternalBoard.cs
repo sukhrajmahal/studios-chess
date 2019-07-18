@@ -55,8 +55,6 @@ namespace ChessEngine
 
         public void AddPiece(Piece piece)
         {
-            Debug.Log("Adding " + piece.Type.ToString() + "To external Board");
-
             //Creating a new Game Object
             Point position = piece.Position;
             GameObject go = Instantiate(typeDict[piece.Type], GetTileCentre(position), 
@@ -65,27 +63,27 @@ namespace ChessEngine
             //Setting the colour of the piece
             RenderPiece(go, colourDict[piece.Colour]);
             //Adding the Game Object to board
-            board[position.x, position.y] = go;
+            board[position.X, position.Y] = go;
         }
 
         public void MovePiece(Piece piece, Point newPos)
         {
             Point oldPos = piece.Position;
             //Checking there is game object here
-            GameObject selectedPiece = board[oldPos.x, oldPos.y];
+            GameObject selectedPiece = board[oldPos.X, oldPos.Y];
             if (selectedPiece != null)
             {
                 //Checking if the move is a captures
-                if (board[newPos.x, newPos.y] != null)
+                if (board[newPos.X, newPos.Y] != null)
                 {
                     //Remove the captured piece
-                    Destroy(board[newPos.x, newPos.y]);
+                    Destroy(board[newPos.X, newPos.Y]);
                 }
                 //Moving the 3d object
                 selectedPiece.transform.position = GetTileCentre(newPos);
                 //Moving the object in the array
-                board[newPos.x, newPos.y] = selectedPiece;
-                board[oldPos.x, oldPos.y] = null;  
+                board[newPos.X, newPos.Y] = selectedPiece;
+                board[oldPos.X, oldPos.Y] = null;  
             }
         }
 
@@ -101,9 +99,9 @@ namespace ChessEngine
             //The board in memory thinks top left is (0,0) while
             //unity thinks bottom left is (0,0). Therefore the unity 
             //way needs y to be inverted before we get the new position
-            var yPos = (GlobalVars.gridSize - 1) - pos.y;
+            var yPos = (GlobalVars.gridSize - 1) - pos.Y;
 
-            origin.x += (TILE_SIZE * pos.x) + TITLE_OFFSET;
+            origin.x += (TILE_SIZE * pos.X) + TITLE_OFFSET;
             origin.z += (TILE_SIZE * yPos) + TITLE_OFFSET;
             return origin;
         }

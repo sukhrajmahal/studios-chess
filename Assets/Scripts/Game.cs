@@ -46,6 +46,7 @@ namespace ChessEngine
             if (Input.GetMouseButtonDown(0))
             {
                 Point mouseClick = getMouseCoordinates();
+
                 //Checking the current player is human
                 if (currentPlayer.GetType() == typeof(HumanPlayer))
                 {
@@ -57,16 +58,16 @@ namespace ChessEngine
         private Point getMouseCoordinates()
         {
             //if the mouse isn't clicked on the board, this default will be returned
-            Point mouseCoordinate = new Point(-1, -1);
+            var mouseCoordinate = new Point(-1, -1);
 
             RaycastHit hit;
             //If the mouse clicked on the
             if (Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out hit, 25.0f, LayerMask.GetMask("ChessPlane")))
             {
-                mouseCoordinate.x =  (int)hit.point.x;
-                //Inversing the y pos because unity thinks bottom left is (0,0)
+                mouseCoordinate.X =  (int)hit.point.x;
+                //Inversing the y position because unity thinks bottom left is (0,0)
                 var yPos = (int)hit.point.z;
-                mouseCoordinate.y = (GlobalVars.gridSize - 1) - yPos;
+                mouseCoordinate.Y = (GlobalVars.gridSize - 1) - yPos;
             }
             return mouseCoordinate;
         }

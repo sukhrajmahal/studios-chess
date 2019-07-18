@@ -45,8 +45,8 @@ public class BoardHighlights : MonoBehaviour
             highlight.SetActive(true);
             //Again unity thinks 0,0 is at bottom left. So we inverse the y. (size of grid 
             //-1 because we start at 0. Then subtract y pos to inverse
-            var yPos = (GlobalVars.gridSize - 1 - move.position.y);
-            highlight.transform.position = new Vector3(move.position.x + 0.5f, 0, yPos + 0.5f);
+            var yPos = (GlobalVars.gridSize - 1 - move.position.Y);
+            highlight.transform.position = new Vector3(move.position.X + 0.5f, 0, yPos + 0.5f);
         }
     }
 
