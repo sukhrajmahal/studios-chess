@@ -45,9 +45,11 @@ namespace ChessEngine
             var thisMove = new Move();
 
             //Checking if the move is a captures
-            if (board[newPos.X, newPos.Y] != null)
+            var pieceAtNewPos = board[newPos.X, newPos.Y];
+            if (pieceAtNewPos != null)
             {
-                thisMove.PieceTaken = board[newPos.X, newPos.Y];
+                thisMove.PieceTaken = pieceAtNewPos;
+                playerPieceLists[pieceAtNewPos.Colour].Remove(pieceAtNewPos);
             }
             //Collecting information about the move
             thisMove.PieceMoved = piece;
