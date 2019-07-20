@@ -60,6 +60,18 @@ namespace ChessEngine
                     }
                 }
             }
+
+            //Checking if is the computers turn
+            if (currentPlayer.GetType() == typeof(ComputerPlayer))
+            {
+                var thisMove = ((ComputerPlayer)currentPlayer).MakeMove();
+                if(thisMove == null)
+                {
+                    throw new System.Exception("Computer Failed to make move");
+                }
+                thisMove.TurnNumber = turnNumber;
+                endTurn();
+            }
         }
 
         private Point getMouseCoordinates()
