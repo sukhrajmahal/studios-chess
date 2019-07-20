@@ -11,11 +11,13 @@ public class BoardHighlights : MonoBehaviour
     public Material killHighlight;
     public Material highlightMaterial;
     private List<GameObject> highlights;
+    private ExternalBoard externalBoard;
 
     private void Start()
     {
         Instance = this;
         highlights = new List<GameObject>();
+        externalBoard = ExternalBoard.Instance;
     }
 
     private GameObject GetHighlightObject()

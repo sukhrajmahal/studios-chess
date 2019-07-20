@@ -16,24 +16,27 @@ namespace ChessEngine
             highlightsManager = BoardHighlights.Instance;
         }
 
-        public void HandleClick(Point clickPos)
+        public Move HandleClick(Point clickPos)
         {
             //If there has been no piece selected
             if (selectedPiece == null)
             {
                 selectedPiece = internalBoard.GetPiece(clickPos);
                 //If the user hasn't selected anything valid, do nothing
-                if (selectedPiece == null)
+                if (selectedPiece == null || selectedPiece.Colour != colour)
                 {
-                    return;
+                    return null;
                 }
                 //Getting the list of possible moves
                 possibleMoves = internalBoard.GetPossibleMoves(selectedPiece);
                 //Setting the highlights on the board
                 highlightsManager.HighLightAllowedMoves(possibleMoves);
+                return null;
             }
             else
             {
+                Move thisMove = null;
+
                 //If the person has clicked on a place is a valid move
                 if (possibleMoves != null)
                 {
@@ -43,8 +46,11 @@ namespace ChessEngine
                         Point movePos = possibleMove.position;
                         if (clickPos.X == movePos.X && clickPos.Y == movePos.Y)
                         {
-                            internalBoard.MovePiece(selectedPiece, clickPos);
-                            break;
+                            //Storing the old position of piece so that it can be stored in the move log
+                            Point pieceOldPos = selectedPiece.Position;
+
+                            thisMove = internalBoard.MovePiece(selectedPiece, clickPos);
+                            thisMove.PlayerID = playerId;
                         }
                     }
                 }
@@ -53,6 +59,7 @@ namespace ChessEngine
                 selectedPiece = null;
                 possibleMoves = null;
                 highlightsManager.HideHighlights();
+                return thisMove;
             }
         }
     }

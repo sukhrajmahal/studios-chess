@@ -23,8 +23,8 @@ namespace ChessEngine
         private GameObject[,] board;
 
         //Dictionaries to map Piece type and colours to materials and Game Objects.
-        Dictionary<PieceColour, Material> colourDict;
-        Dictionary<PieceType, GameObject> typeDict;
+        private Dictionary<PieceColour, Material> colourDict;
+        private Dictionary<PieceType, GameObject> typeDict;
 
         //Board Constants
         private const float TILE_SIZE = 1.0f;
@@ -66,7 +66,7 @@ namespace ChessEngine
             board[position.X, position.Y] = go;
         }
 
-        public void MovePiece(Piece piece, Point newPos)
+        public Move MovePiece(Piece piece, Point newPos)
         {
             Point oldPos = piece.Position;
             //Checking there is game object here
@@ -83,8 +83,9 @@ namespace ChessEngine
                 selectedPiece.transform.position = GetTileCentre(newPos);
                 //Moving the object in the array
                 board[newPos.X, newPos.Y] = selectedPiece;
-                board[oldPos.X, oldPos.Y] = null;  
+                board[oldPos.X, oldPos.Y] = null;
             }
+            return null;
         }
 
         public void Promote(Piece piece, PieceType type)

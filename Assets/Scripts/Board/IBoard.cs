@@ -7,7 +7,7 @@ namespace ChessEngine
     interface IBoard
     {
         void AddPiece(Piece piece);
-        void MovePiece(Piece piece, Point newPos);
+        Move MovePiece(Piece piece, Point newPos);
         void Promote(Piece piece, PieceType type);
     }
 }

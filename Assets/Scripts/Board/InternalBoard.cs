@@ -13,26 +13,47 @@ namespace ChessEngine
     {
         private Piece[,] board;
         private ExternalBoard externalBoard;
+        private Dictionary<PieceColour, List<Piece>> playerPieceLists;
 
         public InternalBoard()
         {
             board = new Piece[GlobalVars.gridSize, GlobalVars.gridSize];
             externalBoard = ExternalBoard.Instance;
+
+            //Setting up lists
+            playerPieceLists = new Dictionary<PieceColour, List<Piece>>();
+            playerPieceLists.Add(PieceColour.White, new List<Piece>());
+            playerPieceLists.Add(PieceColour.Black, new List<Piece>());
+
+            if (GlobalVars.gameType == GameType.FourPlayer)
+            {
+                playerPieceLists.Add(PieceColour.Red, new List<Piece>());
+                playerPieceLists.Add(PieceColour.Yellow, new List<Piece>());
+            }
         }
 
         public void AddPiece(Piece piece)
         {
             board[piece.Position.X, piece.Position.Y] = piece;
+            playerPieceLists[piece.Colour].Add(piece);
             externalBoard.AddPiece(piece);
         }
 
-        public void MovePiece(Piece piece, Point newPos)
+        public Move MovePiece(Piece piece, Point newPos)
         {
+            //Creating Move object to store info about the move
+            var thisMove = new Move();
+
             //Checking if the move is a captures
             if (board[newPos.X, newPos.Y] != null)
             {
-                //Do something here later
+                thisMove.PieceTaken = board[newPos.X, newPos.Y];
             }
+            //Collecting information about the move
+            thisMove.PieceMoved = piece;
+            thisMove.OldPosition = piece.Position;
+            thisMove.NewPosition = newPos;
+
             //Moving piece internally
             board[piece.Position.X, piece.Position.Y] = null;
             board[newPos.X, newPos.Y] = piece;
@@ -41,6 +62,8 @@ namespace ChessEngine
             externalBoard.MovePiece(piece, newPos);
             //Updating Pieces knowledge of the position
             piece.Position = newPos;
+
+            return thisMove;
         }
 
         public void Promote(Piece piece, PieceType type)
@@ -77,6 +100,11 @@ namespace ChessEngine
                 return board[pos.X, pos.Y];
             }
             return null;
+        }
+
+        public List<Piece> GetAllPieces(PieceColour team)
+        {
+            return playerPieceLists[team];
         }
 
         private List<PossibleMove> getPawnMoves(Piece piece)
@@ -274,7 +302,7 @@ namespace ChessEngine
 
         //A wrapper around the full addMoveIfValid, allowing non pawn pieces to 
         //Call a simpler method
-        private bool addMoveIfValid(List<PossibleMove> moves, int x, int y, PieceColour colour)
+        private bool addMoveIfValid  (List<PossibleMove> moves, int x, int y, PieceColour colour)
         {
             return addMoveIfValid(moves, x, y, colour, false, false);
         }
@@ -304,13 +332,13 @@ namespace ChessEngine
             Piece pieceAtOption = board[x, y];
             if (pieceAtOption == null && !killOnly)
             {
-                moves.Add(new PossibleMove(new Point(x, y), false));
+                moves.Add(new PossibleMove(new Point(x, y)));
                 return true;
             }
             else if (pieceAtOption != null && colour != pieceAtOption.Colour && !nonKillOnly)
             {
                 //Add a possible kill move
-                moves.Add(new PossibleMove(new Point(x, y), true));
+                moves.Add(new PossibleMove(new Point(x, y), pieceAtOption));
             }
             //We have hit a piece, therefore no more moves will available in this 
             //direction. Signal that no more moves should be made. 

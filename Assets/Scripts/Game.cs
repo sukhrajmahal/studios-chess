@@ -10,7 +10,7 @@ namespace ChessEngine
     {
         private List<Player> players;
         private Player currentPlayer;
-        private List<string> moveHistory;
+        private List<Move> moveHistory;
         private int turnNumber = 0;
         private InternalBoard internalBoard;
           
@@ -18,7 +18,7 @@ namespace ChessEngine
         {
             //Initializing Lists
             players = new List<Player>();
-            moveHistory = new List<string>();
+            moveHistory = new List<Move>();
 
             //Initializing Boards
             internalBoard = new InternalBoard();
@@ -50,7 +50,14 @@ namespace ChessEngine
                 //Checking the current player is human
                 if (currentPlayer.GetType() == typeof(HumanPlayer))
                 {
-                    ((HumanPlayer)currentPlayer).HandleClick(mouseClick);
+                    var thisMove = ((HumanPlayer)currentPlayer).HandleClick(mouseClick);
+                    //Checking move is not null
+                    if (thisMove != null)
+                    {
+                        thisMove.TurnNumber = turnNumber;
+                        moveHistory.Add(thisMove);
+                        endTurn();
+                    }
                 }
             }
         }
@@ -70,6 +77,13 @@ namespace ChessEngine
                 mouseCoordinate.Y = (GlobalVars.gridSize - 1) - yPos;
             }
             return mouseCoordinate;
+        }
+
+        private void endTurn()
+        {
+            turnNumber++;
+            var currentPlayerIndex = turnNumber % players.Count;
+            currentPlayer = players[currentPlayerIndex];
         }
     }
 }
