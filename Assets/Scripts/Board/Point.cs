@@ -7,11 +7,25 @@ namespace ChessEngine
     {
         public int X { get; set; }
         public int Y { get; set; }
-
+        
         public Point(int p1, int p2)
         {
             X = p1;
             Y = p2;
+        }
+
+        public static Point operator +(Point p1, Point p2)
+        {
+            return new Point(p1.X + p2.X, p1.Y + p2.Y);
+        }
+        public static Point operator -(Point p1, Point p2)
+        {
+            return new Point(p1.X - p2.X, p1.Y - p2.Y);
+        }
+
+        public static Point operator *(Point p1, int number)
+        {
+            return new Point(p1.X * number, p1.Y * number);
         }
 
         public bool IsOnBoard()

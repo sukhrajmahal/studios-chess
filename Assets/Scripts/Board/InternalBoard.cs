@@ -114,20 +114,36 @@ namespace ChessEngine
             var moves = new List<PossibleMove>();
 
             //Finding the direction in which the pawn will move
-            //Default for Black (going south)
-            var pawnYForwardDir = 1;
+            Point forwardDir = new Point(0, 0);
+            Point killMovesDir = new Point(0, 0);
 
-            //if piece is White, change this to -1
-            if (piece.Colour == PieceColour.White)
+            //Setting the directions for the other colours
+            switch (piece.Colour)
             {
-                pawnYForwardDir = -1;
+                case (PieceColour.White):
+                    forwardDir = new Point(0, -1);
+                    killMovesDir = new Point(1, 0);
+                    break;
+                case (PieceColour.Black):
+                    forwardDir = new Point(0, 1);
+                    killMovesDir = new Point(1, 0);
+                    break;
+                case (PieceColour.Red):
+                    forwardDir = new Point(1, 0);
+                    killMovesDir = new Point(0, 1);
+                    break;
+                case (PieceColour.Yellow):
+                    forwardDir = new Point(-1, 0);
+                    killMovesDir = new Point(0, 1);
+                    break;
             }
 
             //Checking the normal forward move
-            addMoveIfValid(moves, piece.Position.X, piece.Position.Y + pawnYForwardDir, piece.Colour, false, true);
+            var forwardMovePos = piece.Position + forwardDir;
+            addMoveIfValid(moves, forwardMovePos, piece.Colour, false, true);
             //Checking the kill moves to either side
-            addMoveIfValid(moves, piece.Position.X + 1, piece.Position.Y + pawnYForwardDir, piece.Colour, true, false);
-            addMoveIfValid(moves, piece.Position.X - 1, piece.Position.Y + pawnYForwardDir, piece.Colour, true, false);
+            addMoveIfValid(moves, forwardMovePos + killMovesDir, piece.Colour, true, false);
+            addMoveIfValid(moves, forwardMovePos - killMovesDir, piece.Colour, true, false);
 
             //Checking if the it is the pawns first move, if so allow pawn to move 2 spaces.
             //'1' is the first pawn row from the top. Grid size - 2 is grid size -1 (because we count from 
@@ -138,8 +154,8 @@ namespace ChessEngine
                 //Four player does not allow pawn to move 2 spaces
                 if (GlobalVars.gameType != GameType.FourPlayer)
                 {
-                    var potentialYPos = piece.Position.Y + (pawnYForwardDir * 2);
-                    addMoveIfValid(moves, piece.Position.X, potentialYPos, piece.Colour);
+                    var potientalPos = piece.Position + (forwardDir * 2);
+                    addMoveIfValid(moves, potientalPos, piece.Colour, false, true);
                 }
             }
 
@@ -304,9 +320,16 @@ namespace ChessEngine
 
         //A wrapper around the full addMoveIfValid, allowing non pawn pieces to 
         //Call a simpler method
-        private bool addMoveIfValid  (List<PossibleMove> moves, int x, int y, PieceColour colour)
+        private bool addMoveIfValid(List<PossibleMove> moves, Point pos, PieceColour colour)
         {
-            return addMoveIfValid(moves, x, y, colour, false, false);
+            return addMoveIfValid(moves, pos, colour, false, false);
+        }
+
+        //Another wrapper around addMoveIfValid that allows user to pass in x and y as ints. Useful
+        //for non pawn types. 
+        private bool addMoveIfValid(List<PossibleMove> moves, int x, int y, PieceColour colour)
+        {
+            return addMoveIfValid(moves, new Point(x, y), colour);
         }
 
         /// <summary>
@@ -321,26 +344,26 @@ namespace ChessEngine
         /// <returns> Boolean, returns false if the are no further possible moves in 
         /// this direction as it has been blocked. Returns true if search can
         /// continue</returns>
-        private bool addMoveIfValid(List<PossibleMove> moves, int x, int y, PieceColour colour, bool killOnly, bool nonKillOnly)
+        private bool addMoveIfValid(List<PossibleMove> moves, Point pos, PieceColour colour, bool killOnly, bool nonKillOnly)
         {
             //Checking that the x and y points are within the limitations of the board
             //This is useful for knights, kings and other pieces that don't have unlimited 
             //moving like rooks. Checking here will reduce the overall number of if statements
-            if (x < 0 || x >= GlobalVars.gridSize || y < 0 || y >= GlobalVars.gridSize)
+            if (pos.X < 0 || pos.X >= GlobalVars.gridSize || pos.Y < 0 || pos.Y >= GlobalVars.gridSize)
             {
                 return false;
             }
 
-            Piece pieceAtOption = board[x, y];
+            Piece pieceAtOption = board[pos.X, pos.Y];
             if (pieceAtOption == null && !killOnly)
             {
-                moves.Add(new PossibleMove(new Point(x, y)));
+                moves.Add(new PossibleMove(pos));
                 return true;
             }
             else if (pieceAtOption != null && colour != pieceAtOption.Colour && !nonKillOnly)
             {
                 //Add a possible kill move
-                moves.Add(new PossibleMove(new Point(x, y), pieceAtOption));
+                moves.Add(new PossibleMove(pos, pieceAtOption));
             }
             //We have hit a piece, therefore no more moves will available in this 
             //direction. Signal that no more moves should be made. 

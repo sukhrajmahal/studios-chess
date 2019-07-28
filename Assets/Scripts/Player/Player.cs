@@ -23,6 +23,7 @@ namespace ChessEngine
                     setUpStandardGame();
                     break;
                 case (GameType.FourPlayer):
+                    setUpFourPlayerGame();
                     break;
                 case (GameType.NineSixty):
                     break;
@@ -58,6 +59,53 @@ namespace ChessEngine
             for (var i = 0; i < GlobalVars.gridSize; i++)
             {
                 internalBoard.AddPiece(new Piece(PieceType.Pawn, colour, new Point(i, pawnStartY)));
+            }
+        }
+
+        private void setUpFourPlayerGame()
+        {
+            switch (colour)
+            {
+                case (PieceColour.White):
+                    internalBoard.AddPiece(new Piece(PieceType.Bishop, colour, new Point(0, 7)));
+                    internalBoard.AddPiece(new Piece(PieceType.Knight, colour, new Point(1, 7)));
+                    internalBoard.AddPiece(new Piece(PieceType.King, colour, new Point(2, 7)));
+                    internalBoard.AddPiece(new Piece(PieceType.Rook, colour, new Point(3, 7)));
+                    for (var i = 0; i < 4; i++)
+                    {
+                        internalBoard.AddPiece(new Piece(PieceType.Pawn, colour, new Point(i, 6)));
+                    }
+                    break;
+                case (PieceColour.Black):
+                    internalBoard.AddPiece(new Piece(PieceType.Bishop, colour, new Point(7, 0)));
+                    internalBoard.AddPiece(new Piece(PieceType.Knight, colour, new Point(6, 0)));
+                    internalBoard.AddPiece(new Piece(PieceType.King, colour, new Point(5, 0)));
+                    internalBoard.AddPiece(new Piece(PieceType.Rook, colour, new Point(4, 0)));
+                    for (var i = 4; i < GlobalVars.gridSize; i++)
+                    {
+                        internalBoard.AddPiece(new Piece(PieceType.Pawn, colour, new Point(i, 1)));
+                    }
+                    break;                  
+                case (PieceColour.Red):
+                    internalBoard.AddPiece(new Piece(PieceType.Bishop, colour, new Point(0, 0)));
+                    internalBoard.AddPiece(new Piece(PieceType.Knight, colour, new Point(0, 1)));
+                    internalBoard.AddPiece(new Piece(PieceType.King, colour, new Point(0, 2)));
+                    internalBoard.AddPiece(new Piece(PieceType.Rook, colour, new Point(0, 3)));
+                    for (var i = 0; i < 4; i++)
+                    {
+                        internalBoard.AddPiece(new Piece(PieceType.Pawn, colour, new Point(1, i)));
+                    }
+                    break;
+                case (PieceColour.Yellow):
+                    internalBoard.AddPiece(new Piece(PieceType.Bishop, colour, new Point(7, 7)));
+                    internalBoard.AddPiece(new Piece(PieceType.Knight, colour, new Point(7, 6)));
+                    internalBoard.AddPiece(new Piece(PieceType.King, colour, new Point(7, 5)));
+                    internalBoard.AddPiece(new Piece(PieceType.Rook, colour, new Point(7, 4)));
+                    for (var i = 4; i < GlobalVars.gridSize; i++)
+                    {
+                        internalBoard.AddPiece(new Piece(PieceType.Pawn, colour, new Point(6, i)));
+                    }
+                    break;
             }
         }
     }
