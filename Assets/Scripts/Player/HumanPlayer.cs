@@ -51,6 +51,9 @@ namespace ChessEngine
 
                             thisMove = internalBoard.MovePiece(selectedPiece, clickPos);
                             thisMove.PlayerID = playerId;
+
+                            //Checking that the piece isn't being promoted
+                            checkPromotion(thisMove);
                         }
                     }
                 }
@@ -61,6 +64,36 @@ namespace ChessEngine
                 highlightsManager.HideHighlights();
                 return thisMove;
             }
+        }
+
+        private void checkPromotion(Move move)
+        {
+            if (move.PieceMoved.Type == PieceType.Pawn)
+            {
+                var piece = move.PieceMoved;
+                var pieceColour = piece.Colour;
+                if (pieceColour == PieceColour.Black && piece.Position.Y == GlobalVars.gridSize - 1)
+                {
+                    showPromotionDialog(piece);
+                }
+                else if (pieceColour == PieceColour.White && piece.Position.Y == 0)
+                {
+                    showPromotionDialog(piece);
+                }
+                else if (pieceColour == PieceColour.Red && piece.Position.X == GlobalVars.gridSize - 1)
+                {
+                    showPromotionDialog(piece);
+                }
+                else if (pieceColour == PieceColour.Yellow && piece.Position.X == 0)
+                {
+                    showPromotionDialog(piece);
+                }
+            }
+        }
+
+        private void showPromotionDialog(Piece piece)
+        {
+            internalBoard.Promote(piece, PieceType.Queen);
         }
     }
 }

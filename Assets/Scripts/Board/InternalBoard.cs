@@ -72,7 +72,7 @@ namespace ChessEngine
         {
             //The most complex code that you will ever see
             piece.Type = type;
-            externalBoard.Promote(piece, type);
+            externalBoard.Promote(piece);
         }
 
         public List<PossibleMove> GetPossibleMoves(Piece piece)

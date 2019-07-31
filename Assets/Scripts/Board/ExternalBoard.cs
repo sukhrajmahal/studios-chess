@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace ChessEngine
 {
-    public class ExternalBoard : MonoBehaviour, IBoard
+    public class ExternalBoard : MonoBehaviour
     {
         //Allowing access of External Board
         public static ExternalBoard Instance { get; set; }
@@ -88,9 +88,12 @@ namespace ChessEngine
             return null;
         }
 
-        public void Promote(Piece piece, PieceType type)
+        public void Promote(Piece piece)
         {
-            throw new System.NotImplementedException();
+            //Destroying the Game Object
+            Destroy(board[piece.Position.X, piece.Position.Y]);
+            //Creating a new piece.
+            AddPiece(piece);
         }
 
         private Vector3 GetTileCentre(Point pos)
