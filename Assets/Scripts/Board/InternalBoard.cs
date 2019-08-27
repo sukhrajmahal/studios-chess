@@ -9,7 +9,7 @@ namespace ChessEngine
     //This class is currently implemented in a simple and naive method.
     //Expect major overhauls when AI is developed as current methods are
     //too expensive. 
-    public class InternalBoard : IBoard
+    public class InternalBoard
     {
         private Piece[,] board;
         private ExternalBoard externalBoard;
