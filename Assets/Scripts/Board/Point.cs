@@ -30,7 +30,7 @@ namespace ChessEngine
 
         public bool IsOnBoard()
         {
-            if (X >= 0 && X < GlobalVars.gridSize && Y >= 0 && Y < GlobalVars.gridSize)
+            if (X >= 0 && X < GlobalVars.GRID_SIZE && Y >= 0 && Y < GlobalVars.GRID_SIZE)
             {
                 return true;
             }

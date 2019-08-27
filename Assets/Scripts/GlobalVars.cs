@@ -20,7 +20,7 @@ namespace ChessEngine
     public static class GlobalVars
     {
         public static GameType gameType = GameType.Standard;
-        public const int gridSize = 8;
+        public const int GRID_SIZE = 8;
         //Giving the number the players (length) and if they are human or not.
         public static List<PlayerInformation> playerDetails = new List<PlayerInformation>()
         {

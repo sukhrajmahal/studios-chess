@@ -86,7 +86,7 @@ namespace ChessEngine
                 mouseCoordinate.X =  (int)hit.point.x;
                 //Inversing the y position because unity thinks bottom left is (0,0)
                 var yPos = (int)hit.point.z;
-                mouseCoordinate.Y = (GlobalVars.gridSize - 1) - yPos;
+                mouseCoordinate.Y = (GlobalVars.GRID_SIZE - 1) - yPos;
             }
             return mouseCoordinate;
         }

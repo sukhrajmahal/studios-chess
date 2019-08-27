@@ -37,7 +37,7 @@ namespace ChessEngine
             //Initializing Dictionaries and Array
             colourDict = new Dictionary<PieceColour, Material>();
             typeDict = new Dictionary<PieceType, GameObject>();
-            board = new GameObject[GlobalVars.gridSize, GlobalVars.gridSize];
+            board = new GameObject[GlobalVars.GRID_SIZE, GlobalVars.GRID_SIZE];
 
             //Setting up dictionaries
             colourDict.Add(PieceColour.Black, blackPieceMat);
@@ -103,7 +103,7 @@ namespace ChessEngine
             //The board in memory thinks top left is (0,0) while
             //unity thinks bottom left is (0,0). Therefore the unity 
             //way needs y to be inverted before we get the new position
-            var yPos = (GlobalVars.gridSize - 1) - pos.Y;
+            var yPos = (GlobalVars.GRID_SIZE - 1) - pos.Y;
 
             origin.x += (TILE_SIZE * pos.X) + TITLE_OFFSET;
             origin.z += (TILE_SIZE * yPos) + TITLE_OFFSET;

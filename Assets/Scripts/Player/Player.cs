@@ -56,7 +56,7 @@ namespace ChessEngine
             internalBoard.AddPiece(new Piece(PieceType.Rook, colour, new Point(7, backStartY)));
 
             //Adding pawns 
-            for (var i = 0; i < GlobalVars.gridSize; i++)
+            for (var i = 0; i < GlobalVars.GRID_SIZE; i++)
             {
                 internalBoard.AddPiece(new Piece(PieceType.Pawn, colour, new Point(i, pawnStartY)));
             }
@@ -81,7 +81,7 @@ namespace ChessEngine
                     internalBoard.AddPiece(new Piece(PieceType.Knight, colour, new Point(6, 0)));
                     internalBoard.AddPiece(new Piece(PieceType.King, colour, new Point(5, 0)));
                     internalBoard.AddPiece(new Piece(PieceType.Rook, colour, new Point(4, 0)));
-                    for (var i = 4; i < GlobalVars.gridSize; i++)
+                    for (var i = 4; i < GlobalVars.GRID_SIZE; i++)
                     {
                         internalBoard.AddPiece(new Piece(PieceType.Pawn, colour, new Point(i, 1)));
                     }
@@ -101,7 +101,7 @@ namespace ChessEngine
                     internalBoard.AddPiece(new Piece(PieceType.Knight, colour, new Point(7, 6)));
                     internalBoard.AddPiece(new Piece(PieceType.King, colour, new Point(7, 5)));
                     internalBoard.AddPiece(new Piece(PieceType.Rook, colour, new Point(7, 4)));
-                    for (var i = 4; i < GlobalVars.gridSize; i++)
+                    for (var i = 4; i < GlobalVars.GRID_SIZE; i++)
                     {
                         internalBoard.AddPiece(new Piece(PieceType.Pawn, colour, new Point(6, i)));
                     }

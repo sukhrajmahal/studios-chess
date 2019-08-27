@@ -72,7 +72,7 @@ namespace ChessEngine
             {
                 var piece = move.PieceMoved;
                 var pieceColour = piece.Colour;
-                if (pieceColour == PieceColour.Black && piece.Position.Y == GlobalVars.gridSize - 1)
+                if (pieceColour == PieceColour.Black && piece.Position.Y == GlobalVars.GRID_SIZE - 1)
                 {
                     showPromotionDialog(piece);
                 }
@@ -80,7 +80,7 @@ namespace ChessEngine
                 {
                     showPromotionDialog(piece);
                 }
-                else if (pieceColour == PieceColour.Red && piece.Position.X == GlobalVars.gridSize - 1)
+                else if (pieceColour == PieceColour.Red && piece.Position.X == GlobalVars.GRID_SIZE - 1)
                 {
                     showPromotionDialog(piece);
                 }

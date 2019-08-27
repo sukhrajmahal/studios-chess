@@ -17,7 +17,7 @@ namespace ChessEngine
 
         public InternalBoard()
         {
-            board = new Piece[GlobalVars.gridSize, GlobalVars.gridSize];
+            board = new Piece[GlobalVars.GRID_SIZE, GlobalVars.GRID_SIZE];
             externalBoard = ExternalBoard.Instance;
 
             //Setting up lists
@@ -148,7 +148,7 @@ namespace ChessEngine
             //Checking if the it is the pawns first move, if so allow pawn to move 2 spaces.
             //'1' is the first pawn row from the top. Grid size - 2 is grid size -1 (because we count from 
             //zero) -1 because its the front row (pawns on front row). 
-            if (piece.Position.Y == 1 || piece.Position.Y == GlobalVars.gridSize - 2)
+            if (piece.Position.Y == 1 || piece.Position.Y == GlobalVars.GRID_SIZE - 2)
             {
                 //Checking that the game type isn't a four player game.
                 //Four player does not allow pawn to move 2 spaces
@@ -180,7 +180,7 @@ namespace ChessEngine
                 }
             }
             //Checking if the piece can move east
-            for (var i = pos.X + 1; i < GlobalVars.gridSize; i++)
+            for (var i = pos.X + 1; i < GlobalVars.GRID_SIZE; i++)
             {
                 if (!addMoveIfValid(moves, i, pos.Y, piece.Colour))
                 {
@@ -188,7 +188,7 @@ namespace ChessEngine
                 }
             }
             //Checking if the piece can move south
-            for (var i = pos.Y + 1; i < GlobalVars.gridSize; i++)
+            for (var i = pos.Y + 1; i < GlobalVars.GRID_SIZE; i++)
             {
                 if (!addMoveIfValid(moves, pos.X, i, piece.Colour))
                 {
@@ -237,7 +237,7 @@ namespace ChessEngine
             //Getting north east moves
             int possibleX = piece.Position.X + 1;
             int possibleY = piece.Position.Y - 1;
-            while (possibleX < GlobalVars.gridSize && possibleY >= 0)
+            while (possibleX < GlobalVars.GRID_SIZE && possibleY >= 0)
             {
                 if (!addMoveIfValid(moves, possibleX, possibleY, piece.Colour))
                 {
@@ -249,7 +249,7 @@ namespace ChessEngine
             //Getting south east positions
             possibleX = piece.Position.X + 1;
             possibleY = piece.Position.Y + 1;
-            while (possibleX < GlobalVars.gridSize && possibleY < GlobalVars.gridSize)
+            while (possibleX < GlobalVars.GRID_SIZE && possibleY < GlobalVars.GRID_SIZE)
             {
                 if (!addMoveIfValid(moves, possibleX, possibleY, piece.Colour))
                 {
@@ -273,7 +273,7 @@ namespace ChessEngine
             //Getting south west moves
             possibleX = piece.Position.X - 1;
             possibleY = piece.Position.Y + 1;
-            while (possibleX >= 0 && possibleY < GlobalVars.gridSize)
+            while (possibleX >= 0 && possibleY < GlobalVars.GRID_SIZE)
             {
                 if (!addMoveIfValid(moves, possibleX, possibleY, piece.Colour))
                 {
@@ -349,7 +349,7 @@ namespace ChessEngine
             //Checking that the x and y points are within the limitations of the board
             //This is useful for knights, kings and other pieces that don't have unlimited 
             //moving like rooks. Checking here will reduce the overall number of if statements
-            if (pos.X < 0 || pos.X >= GlobalVars.gridSize || pos.Y < 0 || pos.Y >= GlobalVars.gridSize)
+            if (pos.X < 0 || pos.X >= GlobalVars.GRID_SIZE || pos.Y < 0 || pos.Y >= GlobalVars.GRID_SIZE)
             {
                 return false;
             }
