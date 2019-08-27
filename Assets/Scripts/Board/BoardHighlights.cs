@@ -9,15 +9,13 @@ public class BoardHighlights : MonoBehaviour
 
     public GameObject highlightPrefab;
     public Material killHighlight;
-    public Material highlightMaterial;
+    public Material selectedMaterial;
     private List<GameObject> highlights;
-    private ExternalBoard externalBoard;
 
     private void Start()
     {
         Instance = this;
         highlights = new List<GameObject>();
-        externalBoard = ExternalBoard.Instance;
     }
 
     private GameObject GetHighlightObject()
@@ -42,7 +40,7 @@ public class BoardHighlights : MonoBehaviour
             }
             else
             {
-                highlight.GetComponent<MeshRenderer>().material = highlightMaterial;
+                highlight.GetComponent<MeshRenderer>().material = selectedMaterial;
             }
             highlight.SetActive(true);
             //Again unity thinks 0,0 is at bottom left. So we inverse the y. (size of grid 
